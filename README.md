@@ -1,152 +1,213 @@
-# API REST - Gestión de Productos
+# Prueba Técnica Backend - Gestión de Productos
 
-API REST simple en Laravel 11 para gestionar un catálogo de productos.
-
-## 🚀 Inicio Rápido (Opción Fácil)
-
-### En Mac/Linux - Una sola línea:
-
-```bash
-./start.sh
-```
-
-¡Eso es todo! El servidor se iniciará automáticamente.
+Bienvenido/a a la prueba técnica backend. Tienes **30 minutos** para completar una **API REST** en Laravel 11.
 
 ---
 
-## 🔧 Instalación Manual (Si lo prefieres)
+## Preparación del Entorno
 
-```bash
-# Cambiar al directorio del proyecto
+### 1. Requisitos
+- PHP 8.3+
+- Composer 2.0+
+- SQLite (incluido)
+
+### 2. Instalación
+
+**Windows:**
+```powershell
 cd api-productos
-
-# Instalar dependencias
 composer install
-
-# Configurar variables de entorno
-cp .env.example .env
-
-# Generar clave de aplicación
+copy .env.example .env
 php artisan key:generate
-
-# Ejecutar migraciones
 php artisan migrate
-
-# Iniciar servidor
 php artisan serve
 ```
 
-API disponible en: `http://127.0.0.1:8000/api/`
+**macOS/Linux:**
+```bash
+cd api-productos
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate
+php artisan serve
+```
 
-## 📋 Endpoints
+**API:** `http://127.0.0.1:8000/api`
 
-| Método | Endpoint | Descripción | Status |
-|--------|----------|-------------|--------|
-| GET | `/api/products` | Listar todos los productos | 200 |
-| POST | `/api/products` | Crear nuevo producto | 201 |
-| GET | `/api/products/{id}` | Obtener un producto | 200/404 |
-| PUT | `/api/products/{id}` | Actualizar producto | 200/404 |
-| DELETE | `/api/products/{id}` | Eliminar producto | 204/404 |
+---
 
-## 📝 Campos del Producto
+## Objetivo
 
+Desarrollar **5 endpoints CRUD** funcionales:
+
+| Método | Endpoint | Descripción |
+|--------|----------|------------|
+| GET | `/api/products` | Listar productos |
+| POST | `/api/products` | Crear producto |
+| GET | `/api/products/{id}` | Obtener producto |
+| PUT | `/api/products/{id}` | Actualizar producto |
+| DELETE | `/api/products/{id}` | Eliminar producto |
+
+---
+
+## Estructura
+
+```
+api-productos/
+├── app/Http/Controllers/Api/ProductController.php
+├── app/Http/Requests/
+│   ├── StoreProductRequest.php
+│   └── UpdateProductRequest.php
+├── app/Models/Product.php
+├── database/migrations/
+├── routes/api.php
+└── .env
+```
+
+---
+
+## Modelo Product
+
+| Campo | Tipo | Validación |
+|-------|------|-----------|
+| name | String | Requerido, min 3 caracteres |
+| description | Text | Opcional |
+| price | Decimal | Requerido, > 0 |
+| stock | Integer | Requerido, >= 0 |
+
+---
+
+## Ejemplos
+
+**GET /api/products**
+```json
+[
+  {
+    "id": 1,
+    "name": "Laptop",
+    "price": "999.99",
+    "stock": 5,
+    "created_at": "2026-02-27T10:00:00Z",
+    "updated_at": "2026-02-27T10:00:00Z"
+  }
+]
+```
+
+**POST /api/products**
 ```json
 {
-  "id": 1,
-  "name": "Laptop",              // string, requerido, mín. 3 caracteres
-  "description": "Gaming laptop", // text, opcional
-  "price": 999.99,               // decimal, requerido, > 0
-  "stock": 5,                    // integer, requerido, >= 0
-  "created_at": "2026-02-26T17:19:33.000000Z",
-  "updated_at": "2026-02-26T17:19:33.000000Z"
+  "name": "Monitor",
+  "price": 599.99,
+  "stock": 10
 }
 ```
 
-## 🔧 Ejemplos de Uso
+Respuesta: **201 Created**
 
-### Crear Producto
+**GET /api/products/1** → **200 OK** o **404 Not Found**
+
+**PUT /api/products/1** → **200 OK** o **404 Not Found**
+
+**DELETE /api/products/1** → **204 No Content** o **404 Not Found**
+
+---
+
+## Validación
+
+**POST:**
+```php
+'name' => 'required|string|min:3|max:255',
+'price' => 'required|numeric|gt:0',
+'stock' => 'required|integer|gte:0',
+'description' => 'nullable|string'
+```
+
+**PUT:** Todos los campos opcionales
+
+---
+
+## Códigos HTTP Esperados
+
+- **200** - GET, PUT exitosos
+- **201** - POST exitoso
+- **204** - DELETE exitoso
+- **404** - Producto no existe
+- **422** - Error de validación
+
+---
+
+## Tareas Prioritarias
+
+1. ✅ Validación en StoreProductRequest.php
+2. ✅ Validación en UpdateProductRequest.php
+3. ✅ Implementar ProductController (index, store, show, update, destroy)
+4. ✅ Manejo correcto de errores HTTP
+5. ✅ Respuestas JSON correctas
+
+---
+
+## Pruebas Rápidas
+
 ```bash
+# Listar
+curl http://127.0.0.1:8000/api/products
+
+# Crear
 curl -X POST http://127.0.0.1:8000/api/products \
   -H "Content-Type: application/json" \
-  -d '{
-    "name": "Laptop",
-    "description": "Laptop gaming",
-    "price": 999.99,
-    "stock": 5
-  }'
-```
+  -d '{"name":"Producto","price":100,"stock":5}'
 
-### Listar Productos
-```bash
-curl http://127.0.0.1:8000/api/products
-```
-
-### Obtener Producto
-```bash
+# Obtener
 curl http://127.0.0.1:8000/api/products/1
-```
 
-### Actualizar Producto
-```bash
+# Actualizar
 curl -X PUT http://127.0.0.1:8000/api/products/1 \
   -H "Content-Type: application/json" \
-  -d '{"price": 849.99, "stock": 10}'
-```
+  -d '{"price":150}'
 
-### Eliminar Producto
-```bash
+# Eliminar
 curl -X DELETE http://127.0.0.1:8000/api/products/1
 ```
 
-## ✅ Validación
+---
 
-**Al crear producto:**
-- `name`: Requerido, mínimo 3 caracteres
-- `price`: Requerido, mayor a 0
-- `stock`: Requerido, mínimo 0
-- `description`: Opcional
+## Criterios de Evaluación
 
-**Al actualizar:**
-- Todos los campos son opcionales
-- Si se envían, aplican las mismas reglas de validación
+**Técnico (70%)**
+- Funcionalidad correcta
+- Validación de datos
+- Manejo de errores
+- Código limpio
 
-## 🛑 Códigos de Error
+**Git (30%)**
+- Commits descriptivos
+- Gestión de tiempo
+- Resolución de problemas
 
-| Código | Mensaje | Descripción |
-|--------|---------|-------------|
-| 200 | OK | Solicitud exitosa |
-| 201 | Created | Producto creado |
-| 204 | No Content | Producto eliminado |
-| 404 | Not Found | Producto no existe |
-| 422 | Validation Failed | Errores de validación |
+---
 
-## 📦 Estructura del Proyecto
+## Consejos
 
-```
-app/
-├── Models/Product.php
-├── Http/
-│   ├── Controllers/Api/ProductController.php
-│   └── Requests/
-│       ├── StoreProductRequest.php
-│       └── UpdateProductRequest.php
+✅ Lee TODO el código antes de empezar  
+✅ Commits frecuentes  
+✅ Prueba mientras desarrollas  
+✅ Funcionalidad primero  
+✅ Sin librerías adicionales  
 
-database/
-└── migrations/2026_02_26_171046_create_products_table.php
+---
 
-routes/
-└── api.php
-```
+## FAQ
 
-## 🔐 Características
+**¿Puedo usar otras librerías?**  
+No, solo las de composer.json
 
-- ✅ Sin autenticación (API pública)
-- ✅ Validación robusta
-- ✅ Manejo de errores HTTP estándar
-- ✅ Respuestas en JSON
-- ✅ Timestamps automáticos
-- ✅ Base de datos SQLite (configurable)
+**¿Qué pasa si no termino?**  
+Se evalúa lo completado
 
-## 📄 Documentación Completa
+**¿Problemas con setup?**  
+Avisa inmediatamente
 
-Para más detalles, ver [API_DOCUMENTATION.md](API_DOCUMENTATION.md)
+---
+
+**¡Buena suerte! Tienes 30 minutos. ¡Adelante! 🚀**
