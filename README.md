@@ -205,9 +205,13 @@ No, solo las de composer.json
 **¿Qué pasa si no termino?**  
 Se evalúa lo completado
 
+<<<<<<< HEAD
 **¿Problemas con setup?**  
 Avisa inmediatamente
 
 ---
 
 **¡Buena suerte! Tienes 30 minutos. ¡Adelante! 🚀**
+=======
+
+>>>>>>> 7a978125dc52261e079b818024fe5cec3094c86b
