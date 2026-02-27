@@ -4,6 +4,12 @@ Bienvenido/a a la prueba técnica backend. Tienes **30 minutos** para completar 
 
 ---
 
+## 📖 Descripción del Problema
+
+Se requiere completar la implementación de una **API REST para gestionar un catálogo de productos** con operaciones CRUD (crear, leer, actualizar, eliminar). El proyecto ya tiene la **estructura base** (modelo Product, tabla de BD, rutas), pero **falta implementar la lógica del controlador** y las **validaciones de datos**. Tu tarea es crear los 5 endpoints funcionales con validación robusta y manejo correcto de errores HTTP.
+
+---
+
 ## Preparación del Entorno
 
 ### 1. Requisitos
@@ -147,6 +153,26 @@ Respuesta: **201 Created**
 
 ---
 
+## 📂 Archivos a Completar
+
+El postulante debe llenar **3 archivos** con su lógica:
+
+### 1. **app/Http/Requests/StoreProductRequest.php**
+- Completa el método `rules()` con las validaciones para crear un producto
+- Reglas requeridas: name, price, stock, description
+
+### 2. **app/Http/Requests/UpdateProductRequest.php**
+- Completa el método `rules()` con las validaciones para actualizar un producto
+- Todos los campos deben ser opcionales (usar `sometimes` en lugar de `required`)
+
+### 3. **app/Http/Controllers/Api/ProductController.php**
+- Implementa los 5 métodos CRUD: `index()`, `store()`, `show()`, `update()`, `destroy()`
+- Cada método tiene un comentario TODO indicando qué hacer
+- Usa el modelo Product para consultas de BD
+- Retorna respuestas JSON con códigos HTTP correctos (200, 201, 204, 404, 422)
+
+---
+
 ## Pruebas Rápidas
 
 ```bash
@@ -205,13 +231,9 @@ No, solo las de composer.json
 **¿Qué pasa si no termino?**  
 Se evalúa lo completado
 
-<<<<<<< HEAD
 **¿Problemas con setup?**  
 Avisa inmediatamente
 
 ---
 
 **¡Buena suerte! Tienes 30 minutos. ¡Adelante! 🚀**
-=======
-
->>>>>>> 7a978125dc52261e079b818024fe5cec3094c86b

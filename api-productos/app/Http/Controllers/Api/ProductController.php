@@ -12,62 +12,46 @@ class ProductController extends Controller
 {
     /**
      * Obtiene la lista de todos los productos
+     * TODO: Completa esta función
      */
     public function index()
     {
-        return response()->json(Product::all(), 200);
+        // Tu código aquí
     }
 
     /**
      * Guarda un nuevo producto en la base de datos
+     * TODO: Completa esta función
      */
     public function store(StoreProductRequest $request)
     {
-        $product = Product::create($request->validated());
-        return response()->json($product, 201);
+        // Tu código aquí
     }
 
     /**
      * Obtiene un producto específico por su ID
+     * TODO: Completa esta función
      */
     public function show(string $id)
     {
-        $product = Product::find($id);
-        
-        if (!$product) {
-            return response()->json(['message' => 'Producto no encontrado'], 404);
-        }
-        
-        return response()->json($product, 200);
+        // Tu código aquí
     }
 
     /**
      * Actualiza un producto existente
+     * TODO: Completa esta función
      */
     public function update(UpdateProductRequest $request, string $id)
     {
-        $product = Product::find($id);
-        
-        if (!$product) {
-            return response()->json(['message' => 'Producto no encontrado'], 404);
-        }
-        
-        $product->update($request->validated());
-        return response()->json($product, 200);
+        // Tu código aquí
     }
 
     /**
      * Elimina un producto de la base de datos
+     * TODO: Completa esta función
      */
     public function destroy(string $id)
     {
-        $product = Product::find($id);
-        
-        if (!$product) {
-            return response()->json(['message' => 'Producto no encontrado'], 404);
-        }
-        
-        $product->delete();
-        return response()->json(null, 204);
+        // Tu código aquí
     }
 }

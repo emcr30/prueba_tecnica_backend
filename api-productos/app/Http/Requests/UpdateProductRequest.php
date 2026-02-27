@@ -16,16 +16,14 @@ class UpdateProductRequest extends FormRequest
 
     /**
      * Reglas de validación para actualizar un producto
+     * TODO: Completa esta función con las reglas de validación
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {
         return [
-            'name' => 'sometimes|string|min:3',
-            'description' => 'nullable|string',
-            'price' => 'sometimes|numeric|gt:0',
-            'stock' => 'sometimes|integer|min:0',
+            // Tu código aquí: define las reglas de validación (campos opcionales)
         ];
     }
 }

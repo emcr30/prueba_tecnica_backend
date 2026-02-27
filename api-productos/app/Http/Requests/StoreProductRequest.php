@@ -16,16 +16,14 @@ class StoreProductRequest extends FormRequest
 
     /**
      * Reglas de validación para crear un producto
+     * TODO: Completa esta función con las reglas de validación
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {
         return [
-            'name' => 'required|string|min:3',
-            'description' => 'nullable|string',
-            'price' => 'required|numeric|gt:0',
-            'stock' => 'required|integer|min:0',
+            // Tu código aquí: define las reglas de validación
         ];
     }
 }
