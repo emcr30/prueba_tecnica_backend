@@ -147,6 +147,4 @@ routes/
 - ✅ Timestamps automáticos
 - ✅ Base de datos SQLite (configurable)
 
-## 📄 Documentación Completa
 
-Para más detalles, ver [API_DOCUMENTATION.md](API_DOCUMENTATION.md)
